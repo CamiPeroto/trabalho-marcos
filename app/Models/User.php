@@ -25,7 +25,7 @@ class User extends Authenticatable
      //Criar relacionamento entre um e muitos 
      public function course()
      {
-      return $this->belongsTo(Course::class, 'course_id');
+      return $this->belongsTo(Course::class);
      }
 
     /**

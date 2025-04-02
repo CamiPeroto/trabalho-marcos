@@ -25,7 +25,7 @@ class Course extends Authenticatable
      //Criar relacionamento entre um e muitos 
      public function course()
      {
-         return $this->hasMany(User::class, 'course_id');
+         return $this->hasMany(User::class);
      }
 
     /**
