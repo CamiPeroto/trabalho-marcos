@@ -42,7 +42,6 @@ class CourseController extends Controller
 
         $course = Course::create([
             'name' => $request->name,
-            'semester' => $request->semester,
         ]);
 
         DB::commit();
@@ -70,11 +69,10 @@ class CourseController extends Controller
         DB::beginTransaction();
 
         try{
+            
         //Editar as informações do registro
         $course->update([
             'name' =>$request->name,
-            'semester' => $request->semester,
-        
         ]);
 
         DB::commit();

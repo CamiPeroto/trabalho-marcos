@@ -19,7 +19,6 @@ class Course extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'semester',
     ];
 
      //Criar relacionamento entre um e muitos 
