@@ -31,7 +31,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link active text-light" aria-current="page" href="{{ url('/') }}">Alunos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="{{ route('course.index') }}">Cursos</a>
                     </li>
                 </ul>
             </div>
