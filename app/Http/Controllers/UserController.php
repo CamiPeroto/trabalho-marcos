@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Course;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,10 +28,10 @@ class UserController extends Controller
         return view ('users.show', ['user' => $user]);  
     }
 
-    public function create()
+    public function create(Course $course)
     {
     
-        return view ('users.create');
+        return view ('users.create', ['course' => $course]);
     }
 
     public function store(UserRequest $request)
@@ -46,26 +47,33 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'ra' => $request->ra,
+                'course_id' => $request->course_id,
             ]);
 
             // Operação é concluída com êxito
             DB::commit();
 
             // Redirecionar o usuário, enviar a mensagem de sucesso
-            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário cadastrado com sucesso!');
-        } catch (Exception $e) {
+            return redirect()->route('user.show', 
+            ['user' => $user->id,
+             'course' => $user->course_id])
+            ->with('success', 'Usuário cadastrado com sucesso!');
+                } catch (Exception $e) {
 
-            // Operação não é concluída com êxito
-            DB::rollBack();
+                    // Operação não é concluída com êxito
+                    DB::rollBack();
 
-            // Redirecionar o usuário, enviar a mensagem de erro
-            return back()->withInput()->with('error', 'Usuário não cadastrado!');
-        }
+                    // Redirecionar o usuário, enviar a mensagem de erro
+                    return back()->withInput()->with('error', 'Usuário não cadastrado!');
+                }
     }
      // Carregar o formulário editar usuário
      public function edit(User $user)
      { 
-        return view('users.edit', [ 'user' => $user]);
+        $courses = Course::all(); // Trazer todos os cursos para o select
+        return view('users.edit', 
+        [ 'user' => $user, 
+        'courses' => $courses]);
      }
 
      public function update(UserRequest $request, User $user)
@@ -80,11 +88,13 @@ class UserController extends Controller
                  'name' => $request->name,
                  'email' => $request->email,
                  'ra' => $request->ra,
+                 'course_id' => $request->course_id,
+
              ]);
              // Operação é concluída com êxito
              DB::commit();
              // Redirecionar o usuário, enviar a mensagem de sucesso
-             return redirect()->route('user.show', ['user' => $request->user])->with('success', 'Usuário editado com sucesso!');
+             return redirect()->route('user.show', ['user' => $request->user, 'course' => $user->course_id])->with('success', 'Usuário editado com sucesso!');
          } catch (Exception $e) {
              // Operação não é concluída com êxito
              DB::rollBack();

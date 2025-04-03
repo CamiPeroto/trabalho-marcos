@@ -21,11 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'ra',
+        'course_id'
     ];
      //Criar relacionamento entre um e muitos 
      public function course()
      {
-      return $this->belongsTo(Course::class);
+      return $this->belongsTo(Course::class, 'course_id');
      }
 
     /**

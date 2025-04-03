@@ -17,14 +17,12 @@ class Course extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-    ];
+    protected $fillable = ['name'];
 
      //Criar relacionamento entre um e muitos 
-     public function course()
+     public function users()
      {
-         return $this->hasMany(User::class);
+         return $this->hasMany(User::class, 'course_id');
      }
 
     /**

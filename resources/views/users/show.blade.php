@@ -28,9 +28,10 @@
                 </div>
                 <div class="col-lg-6 mt-3">
                     <p class="margin-show">Curso:</p>
-                    <label class="text-secondary ms-2">Namorada do Rafael</label> 
-                    {{-- linkar o curso --}}
-                </div>
+                    <label class="text-secondary ms-2">
+                        {{ $user->course ? $user->course->name : 'Não informado' }}
+                    </label>
+                </div>                
                 <div class="col-lg-6 mt-3">
                     <p class="margin-show">Cadastrado:</p>
                     <label class="text-secondary ms-2"> {{ \Carbon\Carbon::parse($user->created_at)

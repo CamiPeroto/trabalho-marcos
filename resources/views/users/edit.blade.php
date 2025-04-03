@@ -42,14 +42,18 @@
                         <input class="form-control form-control-bg" type="email" name="email" id="email"
                             value="{{ old('email', $user->email) }}" placeholder="E-mail" required>
                     </div>
-                    {{-- <div class="col-lg-6">
-                        <div class="d-flex">
-                            <p class="margin-show">Curso:</p>
-                            <p class="text-danger ms-1">*</p>
-                        </div>
-                        <input class="form-control form-control-bg" type="text" name="name" id="name"
-                            value="" placeholder="Curso" required>
-                    </div> --}}
+                    <div class="col-lg-6 mt-3">
+                        <p class="margin-show">Curso:</p>
+                        <select class="form-control form-control-bg" name="course_id" required>
+                            <option value="">Selecione um curso</option>
+                            @foreach($courses as $course)
+                                <option value="{{ $course->id }}" 
+                                    {{ old('course_id', $user->course_id) == $course->id ? 'selected' : '' }}>
+                                    {{ $course->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-end mt-5">
                     <button class="btn ms-2 text-decoration-none" type="submit">
