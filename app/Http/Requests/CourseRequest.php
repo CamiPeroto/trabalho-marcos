@@ -32,8 +32,8 @@ class CourseRequest extends FormRequest
     {
         return[
             'name.required' => 'Campo nome é obrigatório!',
-            'name.unique' => 'O Curso já está cadastrado!',
-            'name.min' => 'O Curso deve ter no mínimo :min caracteres!',
+            'name.unique' => 'O curso já está cadastrado!',
+            'name.min' => 'O curso deve ter no mínimo :min caracteres!',
         ];
     }
 }
