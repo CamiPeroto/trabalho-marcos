@@ -31,10 +31,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="{{ url('/') }}">Alunos</a>
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'users']) href="{{route('user.index') }}"> Usuários 
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="{{ route('course.index') }}">Cursos</a>
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu === 'courses']) href="{{ route('course.index') }}">
+                            Cursos
+                        </a>       
+                        {{-- <a class="nav-link active text-light" aria-current="page" href="{{ route('course.index') }}">Cursos</a> --}}
                     </li>
                 </ul>
             </div>
@@ -53,6 +57,8 @@
 <script src="{{ asset('assets/dist/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/dist/js/jquery_mask.js') }}"></script>
 <script src="{{ asset('assets/dist/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/dist/js/ra_mask.js') }}"></script>
+
 @yield('script')
 
 </html>

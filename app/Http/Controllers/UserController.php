@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
@@ -13,105 +12,99 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-    //Recuperar os registros do banco     
-    $users = User::orderBy('id')->paginate(10);
-    return view(   'users.index',[
-        'users' => $users,
-        'name' => $request->name,
-        'email' => $request->email,
-        'ra' => $request->ra,
+        $users = User::orderBy('id')->paginate(10);
+        return view('users.index', [
+            'menu'  => 'users',
+            'users' => $users,
+            'name'  => $request->name,
+            'email' => $request->email,
+            'ra'    => $request->ra,
 
-    ]);
+        ]);
     }
     public function show(User $user)
     {
-        return view ('users.show', ['user' => $user]);  
+        return view('users.show', ['menu' => 'users', 'user' => $user]);
     }
 
     public function create(Course $course)
     {
-    
-        return view ('users.create', ['course' => $course]);
+        $courses = Course::all();
+
+        return view('users.create', ['menu' => 'users', 'courses' => $courses]);
     }
 
     public function store(UserRequest $request)
     {
-        //Validar o formulário
-        $request ->validated();
-        // Marca o ponto inicial da transação
+        $request->validated();
+
         DB::beginTransaction();
 
         try {
-            // Cadastrar no banco de dados na tabela usuários
+            $raClear = str_replace('-', '', $request->ra);
+
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'ra' => $request->ra,
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'ra'        => $raClear,
                 'course_id' => $request->course_id,
             ]);
 
-            // Operação é concluída com êxito
             DB::commit();
 
-            // Redirecionar o usuário, enviar a mensagem de sucesso
-            return redirect()->route('user.show', 
-            ['user' => $user->id,
-             'course' => $user->course_id])
-            ->with('success', 'Usuário cadastrado com sucesso!');
-                } catch (Exception $e) {
+            return redirect()->route('user.show',
+                ['user'  => $user->id,
+                    'course' => $user->course_id])
+                ->with('success', 'Usuário cadastrado com sucesso!');
+        } catch (Exception $e) {
 
-                    // Operação não é concluída com êxito
-                    DB::rollBack();
+            DB::rollBack();
 
-                    // Redirecionar o usuário, enviar a mensagem de erro
-                    return back()->withInput()->with('error', 'Usuário não cadastrado!');
-                }
+            return back()->withInput()->with('error', 'Usuário não cadastrado!');
+        }
     }
-     // Carregar o formulário editar usuário
-     public function edit(User $user)
-     { 
-        $courses = Course::all(); // Trazer todos os cursos para o select
-        return view('users.edit', 
-        [ 'user' => $user, 
-        'courses' => $courses]);
-     }
 
-     public function update(UserRequest $request, User $user)
-     {
-         // Validar o formulário
-         $request->validated();
-         // Marca o ponto inicial de uma transação
-         DB::beginTransaction();
-         try {
-             // Editar as informações do registro no banco de dados
-             $user->update([
-                 'name' => $request->name,
-                 'email' => $request->email,
-                 'ra' => $request->ra,
-                 'course_id' => $request->course_id,
+    public function edit(User $user)
+    {
+        $courses = Course::all();
+        return view('users.edit',
+            ['user'   => $user,
+                'menu'    => 'users',
+                'courses' => $courses]);
+    }
 
-             ]);
-             // Operação é concluída com êxito
-             DB::commit();
-             // Redirecionar o usuário, enviar a mensagem de sucesso
-             return redirect()->route('user.show', ['user' => $request->user, 'course' => $user->course_id])->with('success', 'Usuário editado com sucesso!');
-         } catch (Exception $e) {
-             // Operação não é concluída com êxito
-             DB::rollBack();
-             // Redirecionar o usuário, enviar a mensagem de erro
-             return back()->withInput()->with('error', 'Usuário não editado!');
-         }
-     }
-       // Excluir o usuário do banco de dados
+    public function update(UserRequest $request, User $user)
+    {
+        $request->validated();
+
+        DB::beginTransaction();
+        try {
+            $raClear = str_replace('-', '', $request->ra);
+
+            $user->update([
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'ra'        => $raClear,
+                'course_id' => $request->course_id,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('user.show', ['user' => $request->user, 'course' => $user->course_id])->with('success', 'Usuário editado com sucesso!');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Usuário não editado!');
+        }
+    }
+
     public function destroy(User $user)
     {
         try {
-            // Excluir o registro do banco de dados
             $user->delete();
-            // Redirecionar o usuário, enviar a mensagem de sucesso
+
             return redirect()->route('user.index')->with('success', 'Usuário excluído com sucesso!');
         } catch (Exception $e) {
-            // Redirecionar o usuário, enviar a mensagem de erro
             return redirect()->route('user.index')->with('error', 'Usuário não excluído!');
         }
     }

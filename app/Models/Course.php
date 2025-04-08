@@ -1,16 +1,16 @@
 <?php
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class Course extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,11 +19,11 @@ class Course extends Authenticatable
      */
     protected $fillable = ['name'];
 
-     //Criar relacionamento entre um e muitos 
-     public function users()
-     {
-         return $this->hasMany(User::class, 'course_id');
-     }
+    //Criar relacionamento entre um e muitos
+    public function users()
+    {
+        return $this->hasMany(User::class, 'course_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,7 +43,7 @@ class Course extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 }

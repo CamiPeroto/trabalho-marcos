@@ -11,7 +11,7 @@ class CourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,21 @@ class CourseRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+
+     public function rules(): array
+     {
+       
+         return [
+             'name' => 'required|string|min:5|unique:courses,name',
+
+         ]; 
+     }
+     public function messages(): array
     {
-        return [
-            //
+        return[
+            'name.required' => 'Campo nome é obrigatório!',
+            'name.unique' => 'O Curso já está cadastrado!',
+            'name.min' => 'O Curso deve ter no mínimo :min caracteres!',
         ];
     }
 }

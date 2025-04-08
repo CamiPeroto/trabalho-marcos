@@ -20,7 +20,8 @@
                 </div>
                 <div class="col-lg-6">
                     <p class="margin-show">RA:</p>
-                    <label class="text-secondary ms-2">{{ $user->ra }}</label>
+                    <label class="text-secondary ms-2"> {{ substr($user->ra, 0, 8) . '-' . substr($user->ra, -1) }}</label>
+                   
                 </div>
                 <div class="col-lg-6 mt-3">
                     <p class="margin-show">E-mail:</p>

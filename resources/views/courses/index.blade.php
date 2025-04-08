@@ -30,11 +30,8 @@
                                     <p class="mt-3">{{ $course->name }}</p>
                                 </td>
                                 <td class="padding-table">
-                                    <p class="mt-3">{{\Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s')}}</p>
+                                    <p class="mt-3">{{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y') }}</p>
                                 </td>
-
-
-
                                 <td class="padding-table">
                                     <div class="mt-3 d-flex justify-content-end">
                                         <a class="text-decoration-none open-modal"

@@ -31,7 +31,7 @@
                                     <p class="mt-3">{{ $user->name }}</p>
                                 </td>
                                 <td class="padding-table">
-                                    <p class="mt-3">{{ $user->ra }}</p>
+                                    <p class="mt-3"> {{ substr($user->ra, 0, 8) . '-' . substr($user->ra, -1) }}</p>
                                 </td>
                                 <td class="padding-table">
                                     <p class="mt-3">{{ $user->email }}</p>

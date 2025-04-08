@@ -8,7 +8,7 @@
                     <a href="{{ url('/') }}" class="position-absolute text-decoration-none start-0 ms-3">
                         <i class="fi fi-rr-arrow-left fs-4 btn-icon"></i>
                     </a>
-                   
+
                     <h1 class="text-center">Editar Aluno</h1>
                 </div>
                 <x-alert />
@@ -22,15 +22,16 @@
                             <p class="margin-show">Nome:</p>
                             <p class="text-danger ms-1">*</p>
                         </div>
-                        <input class="form-control form-control-bg" type="text" name="name" id="name" value="{{ old('name', $user->name) }}" placeholder="Nome" required>
-                         </div>
+                        <input class="form-control form-control-bg" type="text" name="name" id="name"
+                            value="{{ old('name', $user->name) }}" placeholder="Nome" required>
+                    </div>
                     <div class="col-lg-6">
                         <div class="d-flex">
                             <p class="margin-show">RA:</p>
                             <p class="text-danger ms-1">*</p>
                         </div>
                         <input class="form-control form-control-bg" type="text" name="ra" id="ra"
-                            value="{{ old('ra', $user->ra) }}" placeholder="00000000-0" required>
+                            value="{{ old('ra', $user->ra) }}" placeholder="00000000-0" required maxlength="10">
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -44,10 +45,10 @@
                     </div>
                     <div class="col-lg-6 mt-3">
                         <p class="margin-show">Curso:</p>
-                        <select class="form-control form-control-bg" name="course_id" required>
+                        <select class="form-control form-control-bg form-select cursor-pointer" name="course_id" required>
                             <option value="">Selecione um curso</option>
-                            @foreach($courses as $course)
-                                <option value="{{ $course->id }}" 
+                            @foreach ($courses as $course)
+                                <option value="{{ $course->id }}"
                                     {{ old('course_id', $user->course_id) == $course->id ? 'selected' : '' }}>
                                     {{ $course->name }}
                                 </option>
