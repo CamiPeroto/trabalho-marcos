@@ -15,7 +15,7 @@ class CourseController extends Controller
 
         return view('courses.index', ['menu' => 'courses', 'courses' => $courses]);
     }
-    // Visualizar os cursos
+    
     public function show(Course $course)
     {
         return view('courses.show', ['menu' => 'courses', 'course' => $course]);
