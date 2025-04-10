@@ -8,7 +8,6 @@
 
 Duplicar o arquivo ".env.example" e renomear para ".env".<br>
 Alterar no arquivo .env as credenciais do banco de dados<br>
-Para a funcionalidade recuperar senha funcionar, necessário alterar as credenciais do servidor de envio de e-mail no arquivo .env.<br>
 
 Instalar as dependências do PHP
 
